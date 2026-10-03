@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.35rem, 2.5cqh, 1.5rem);
+  width: min(100%, 30rem);
+  color: var(--text-color);
+}
+
+app-seven-segment-display {
+  width: 100%;
+}
+
+app-action-button {
+  width: 48%;
+}

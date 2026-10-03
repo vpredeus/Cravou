@@ -1,0 +1,24 @@
+<div class="frame">
+  <div class="screen">
+    <div
+      class="digits"
+      aria-hidden="true"
+      [style.visibility]="hidden() ? 'hidden' : null"
+      [style.opacity]="hidden() ? 0 : null"
+    >
+      @for (character of characters(); track $index) {
+        @if (character === '.') {
+          <svg class="decimal" viewBox="0 0 16 108" focusable="false" aria-hidden="true">
+            <circle cx="8" cy="99" r="5" />
+          </svg>
+        } @else {
+          <app-seven-segment-digit [digit]="character" />
+        }
+      }
+    </div>
+    @if (hidden()) {
+      <div class="concealed-glow" aria-hidden="true"></div>
+    }
+    <div class="glass" aria-hidden="true"></div>
+  </div>
+</div>

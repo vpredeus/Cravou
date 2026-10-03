@@ -1,0 +1,107 @@
+<button
+  #trigger
+  class="settings-trigger"
+  type="button"
+  popovertarget="game-settings"
+  aria-label="Configurações"
+  aria-haspopup="dialog"
+  aria-controls="game-settings"
+  [attr.aria-expanded]="opened()"
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path
+      d="m9 3 1-1h4l1 1 .5 2 2 .9 2-.6 1.4 2.4-1.5 1.5.1 2.3 1.5 1.5-1.4 2.4-2-.6-2 .9-.5 2-1 1h-4l-1-1-.5-2-2-.9-2 .6L3.2 14l1.5-1.5-.1-2.3L3.1 8.7l1.4-2.4 2 .6 2-.9Z"
+    />
+    <circle cx="12" cy="10.5" r="3" />
+  </svg>
+</button>
+
+<section
+  #panel
+  id="game-settings"
+  class="settings-panel"
+  popover="auto"
+  role="dialog"
+  aria-labelledby="settings-title"
+  (beforetoggle)="onBeforeToggle($event)"
+  (toggle)="onToggle()"
+>
+  <h2 id="settings-title">Configurações</h2>
+
+  <section aria-labelledby="profile-title">
+    <h3 id="profile-title">PERFIL</h3>
+    <div class="profile">
+      <app-profile-avatar class="current-avatar" [avatarId]="preferences.profile().avatarId" />
+      <label for="session-nickname"
+        >Nickname
+        <input
+          id="session-nickname"
+          type="text"
+          autocomplete="off"
+          autofocus
+          [value]="preferences.profile().nickname"
+          (input)="editNickname($event)"
+        />
+      </label>
+    </div>
+    <fieldset class="avatars">
+      <legend>Avatar</legend>
+      @for (avatar of avatars; track avatar.id) {
+        <label
+          class="avatar-option"
+          [class.selected]="preferences.profile().avatarId === avatar.id"
+        >
+          <input
+            type="radio"
+            name="session-avatar"
+            [value]="avatar.id"
+            [checked]="preferences.profile().avatarId === avatar.id"
+            (change)="preferences.setAvatar(avatar.id)"
+          />
+          <app-profile-avatar [avatarId]="avatar.id" />
+          <span>{{ avatar.name }}</span>
+        </label>
+      }
+    </fieldset>
+  </section>
+
+  <section aria-labelledby="appearance-title">
+    <h3 id="appearance-title">APARÊNCIA</h3>
+    <label class="setting-row" for="display-color">
+      Cor do display
+      <input
+        id="display-color"
+        type="color"
+        [value]="preferences.accentColor() ?? ''"
+        (input)="editAccent($event)"
+      />
+    </label>
+    <label class="setting-row" for="background-color">
+      Cor do fundo
+      <input
+        id="background-color"
+        type="color"
+        [value]="preferences.backgroundColor() ?? ''"
+        (input)="editBackground($event)"
+      />
+    </label>
+  </section>
+
+  <section aria-labelledby="sound-title">
+    <h3 id="sound-title">SOM</h3>
+    <div class="setting-row">
+      <span>Som</span>
+      <button
+        class="sound-switch"
+        type="button"
+        role="switch"
+        aria-label="Som"
+        [attr.aria-checked]="preferences.soundEnabled()"
+        (click)="preferences.setSoundEnabled(!preferences.soundEnabled())"
+      >
+        <span class="switch-track" aria-hidden="true"></span>
+        {{ preferences.soundEnabled() ? 'Ligado' : 'Desligado' }}
+      </button>
+    </div>
+  </section>
+</section>

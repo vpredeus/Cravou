@@ -1,0 +1,118 @@
+:host {
+  display: block;
+  background: var(--game-background);
+  color: var(--text-color);
+}
+
+.demo {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  padding: max(0.75rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right))
+    max(0.75rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    color-mix(in srgb, var(--accent-color) 4%, var(--game-background)),
+    var(--game-background) 65%
+  );
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex: 0 0 auto;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 850;
+  letter-spacing: -0.07em;
+
+  span {
+    color: var(--accent-color);
+  }
+}
+
+.stage {
+  container-type: size;
+  display: grid;
+  place-items: center;
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+.device-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.4rem, 2.5cqh, 1.25rem);
+  width: min(100%, 30rem, 65cqh);
+}
+
+.target {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin: 0;
+  color: var(--muted-text-color);
+  font-size: clamp(0.6rem, 2.5cqh, 0.75rem);
+  letter-spacing: 0.15em;
+
+  strong {
+    color: var(--text-color);
+    font-size: clamp(0.9rem, 4cqh, 1.25rem);
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  span {
+    color: var(--muted-text-color);
+    font-size: 0.75em;
+  }
+}
+
+.prompt {
+  margin: 0;
+  color: var(--muted-text-color);
+  font-size: clamp(0.65rem, 2.8cqh, 0.85rem);
+  font-weight: 600;
+  letter-spacing: 0.26em;
+}
+
+.hint {
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+  margin: 0;
+  color: var(--muted-text-color);
+  font-size: clamp(0.6rem, 2cqh, 0.75rem);
+  text-align: center;
+
+  kbd {
+    display: inline-block;
+    padding: 0.15em 0.4em;
+    border: 1px solid var(--surface-highlight);
+    border-radius: 0.25rem;
+    font: inherit;
+    font-size: 0.8em;
+  }
+}
+
+.restart-demo {
+  padding: 0.3rem 0.6rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: transparent;
+  color: var(--muted-text-color);
+  font-size: clamp(0.6rem, 2cqh, 0.75rem);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  cursor: pointer;
+}
+
+.restart-demo:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 3px;
+}

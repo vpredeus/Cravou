@@ -1,0 +1,9 @@
+<svg viewBox="0 0 60 108" focusable="false" aria-hidden="true">
+  @for (segment of segments; track segment.name) {
+    <polygon
+      [attr.points]="segment.points"
+      [attr.data-segment]="segment.name"
+      [class.segment-on]="activeSegments().includes(segment.name)"
+    />
+  }
+</svg>

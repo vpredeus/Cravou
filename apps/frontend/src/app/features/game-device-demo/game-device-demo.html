@@ -1,0 +1,39 @@
+<main class="demo">
+  <header>
+    <h1>cravou<span>!</span></h1>
+    <app-settings-panel (openedChange)="settingsOpen.set($event)" />
+  </header>
+
+  <section class="stage" aria-label="Demonstração do dispositivo">
+    <div class="device-preview">
+      <p class="target">
+        META <strong>{{ targetLabel }} <span>s</span></strong>
+      </p>
+      <app-game-device
+        #device
+        [value]="value()"
+        [displayHidden]="hidden()"
+        [soundEnabled]="preferences.soundEnabled()"
+        [soundCue]="soundCue()"
+        [keyboardShortcut]="!settingsOpen()"
+        [disabled]="timer.state() === 'FINISHED' || settingsOpen()"
+        [buttonLabel]="buttonLabel()"
+        (action)="onAction()"
+      >
+        <p class="prompt" role="status" aria-live="polite">{{ prompt() }}</p>
+      </app-game-device>
+      @if (timer.state() === 'FINISHED') {
+        <button
+          class="restart-demo"
+          type="button"
+          aria-label="Reiniciar demonstração do cronômetro"
+          (click)="resetDemo()"
+        >
+          Nova tentativa
+        </button>
+      } @else {
+        <p class="hint">Toque no botão ou pressione <kbd>ESPAÇO</kbd></p>
+      }
+    </div>
+  </section>
+</main>
