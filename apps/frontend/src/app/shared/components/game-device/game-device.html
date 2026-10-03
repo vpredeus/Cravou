@@ -1,0 +1,10 @@
+<app-seven-segment-display [value]="value()" [hidden]="displayHidden()" />
+<ng-content />
+<app-action-button
+  [label]="buttonLabel()"
+  [disabled]="disabled()"
+  [soundEnabled]="soundEnabled()"
+  [soundCue]="soundCue()"
+  [keyboardShortcut]="keyboardShortcut()"
+  (action)="action.emit()"
+/>

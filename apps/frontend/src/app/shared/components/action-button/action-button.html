@@ -1,0 +1,11 @@
+<button
+  type="button"
+  [disabled]="disabled()"
+  [attr.aria-label]="label()"
+  [attr.aria-keyshortcuts]="keyboardShortcut() ? 'Space' : null"
+  [class.is-pressed]="pressed()"
+  (pointerdown)="onPointerDown($event)"
+  (click)="onClick($event)"
+>
+  <span class="button-face" aria-hidden="true"></span>
+</button>

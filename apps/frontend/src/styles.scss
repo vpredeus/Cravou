@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  color-scheme: dark;
+  --surface-background: #0c1011;
+  --game-background: var(--surface-background);
+  --accent-color: #78f59b;
+  --display-off-color: #202e28;
+  --display-frame-color: #242b2d;
+  --text-color: #edf2ef;
+  --shadow-color: #000;
+  --muted-text-color: color-mix(in srgb, var(--text-color) 58%, var(--surface-background));
+  --surface-highlight: color-mix(in srgb, var(--text-color) 12%, transparent);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--game-background);
+  color: var(--text-color);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+button,
+select {
+  font: inherit;
+}

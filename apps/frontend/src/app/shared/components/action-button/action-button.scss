@@ -1,0 +1,68 @@
+:host {
+  display: block;
+  container-type: inline-size;
+  aspect-ratio: 1;
+  --button-depth: clamp(0.2rem, 4cqw, 0.65rem);
+}
+
+button {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  padding: 7%;
+  border: 1px solid var(--surface-highlight);
+  border-radius: 50%;
+  background: var(--display-frame-color);
+  box-shadow:
+    0 0.7rem 1.4rem color-mix(in srgb, var(--shadow-color) 60%, transparent),
+    0 0 1.2rem color-mix(in srgb, var(--accent-color) 12%, transparent),
+    inset 0 2px 2px var(--surface-highlight);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.button-face {
+  border: 1px solid color-mix(in srgb, var(--accent-color) 70%, var(--text-color));
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 40% 25%,
+    color-mix(in srgb, var(--accent-color) 70%, var(--text-color)),
+    var(--accent-color) 70%
+  );
+  box-shadow:
+    0 var(--button-depth) 0 color-mix(in srgb, var(--accent-color) 40%, var(--shadow-color)),
+    0 calc(var(--button-depth) + 0.15rem) 0.5rem var(--shadow-color),
+    inset 0 2px 3px color-mix(in srgb, var(--text-color) 55%, transparent);
+  transform: translateY(calc(var(--button-depth) * -0.5));
+  transition:
+    transform 65ms ease-out,
+    box-shadow 65ms ease-out;
+}
+
+.is-pressed .button-face {
+  transform: translateY(calc(var(--button-depth) * 0.5));
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--accent-color) 40%, var(--shadow-color)),
+    inset 0 2px 6px color-mix(in srgb, var(--shadow-color) 18%, transparent);
+}
+
+button:focus-visible {
+  outline: 3px solid var(--text-color);
+  outline-offset: 5px;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+button:disabled .button-face {
+  filter: brightness(0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button-face {
+    transition: none;
+  }
+}
