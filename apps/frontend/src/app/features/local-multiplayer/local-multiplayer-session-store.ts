@@ -8,12 +8,20 @@ import {
   MIN_LOCAL_PLAYERS,
   isLocalPlayerNameValid,
 } from './local-player';
+import { MultiplayerModeId, getMultiplayerMode, isModeAvailable } from './multiplayer-modes';
 
 @Injectable({ providedIn: 'root' })
 export class LocalMultiplayerSessionStore {
   // Empty until setup is visited; direct access to the next step must not create a group.
   private readonly currentPlayers = signal<readonly LocalPlayer[]>([]);
+  private readonly currentMode = signal<MultiplayerModeId | null>(null);
   readonly players = this.currentPlayers.asReadonly();
+  readonly selectedMode = this.currentMode.asReadonly();
+  readonly selectedModeDefinition = computed(() => getMultiplayerMode(this.selectedMode()));
+  readonly hasValidMode = computed(() => {
+    const mode = this.selectedModeDefinition();
+    return mode !== undefined && isModeAvailable(mode, this.playerCount());
+  });
   readonly playerCount = computed(() => this.players().length);
   readonly canDecrease = computed(() => this.playerCount() > MIN_LOCAL_PLAYERS);
   readonly canIncrease = computed(() => this.playerCount() < MAX_LOCAL_PLAYERS);
@@ -37,6 +45,7 @@ export class LocalMultiplayerSessionStore {
   }
 
   reset(): void {
+    this.clearMode();
     this.currentPlayers.set(
       Array.from({ length: INITIAL_LOCAL_PLAYERS }, (_, position) => this.createPlayer(position)),
     );
@@ -63,6 +72,19 @@ export class LocalMultiplayerSessionStore {
         ),
       ];
     });
+    const mode = this.selectedModeDefinition();
+    if (mode && !isModeAvailable(mode, this.playerCount())) this.clearMode();
+  }
+
+  selectMode(modeId: MultiplayerModeId): boolean {
+    const mode = getMultiplayerMode(modeId);
+    if (!mode || !isModeAvailable(mode, this.playerCount())) return false;
+    this.currentMode.set(mode.id);
+    return true;
+  }
+
+  clearMode(): void {
+    this.currentMode.set(null);
   }
 
   updatePlayerName(playerId: string, name: string): void {

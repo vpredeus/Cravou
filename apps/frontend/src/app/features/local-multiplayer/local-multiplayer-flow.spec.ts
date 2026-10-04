@@ -4,7 +4,7 @@ import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from '../../app.routes';
 import { PreferencesStore } from '../../shared/preferences/preferences-store';
 import { LocalMultiplayerPage } from './local-multiplayer-page';
-import { LocalMultiplayerReadyPage } from './local-multiplayer-ready-page';
+import { LocalMultiplayerModesPage } from './local-multiplayer-modes-page';
 import { LocalMultiplayerSessionStore } from './local-multiplayer-session-store';
 import { INITIAL_LOCAL_PLAYERS, MAX_LOCAL_PLAYERS, MIN_LOCAL_PLAYERS } from './local-player';
 
@@ -136,6 +136,17 @@ describe('Local multiplayer session flow', () => {
     await harness.fixture.whenStable();
     harness.detectChanges();
     expect(router.url).toBe('/local/multiplayer/modes');
+    harness
+      .routeNativeElement!.querySelector<HTMLButtonElement>(
+        'button[aria-labelledby="mode-name-precision"]',
+      )!
+      .click();
+    await harness.fixture.whenStable();
+    harness.detectChanges();
+    continueButton().click();
+    await harness.fixture.whenStable();
+    harness.detectChanges();
+    expect(router.url).toBe('/local/multiplayer/match');
     expect(harness.routeNativeElement!.textContent).toContain('GRUPO PRONTO');
     expect(harness.routeNativeElement!.textContent).toContain('4 jogadores');
     expect(harness.routeNativeElement!.querySelectorAll('ol li')).toHaveLength(
@@ -145,6 +156,11 @@ describe('Local multiplayer session flow', () => {
     expect(
       harness.routeNativeElement!.querySelector('app-settings-panel, app-game-device'),
     ).toBeNull();
+    harness.routeNativeElement!.querySelector<HTMLAnchorElement>('a[aria-label="Voltar"]')!.click();
+    await harness.fixture.whenStable();
+    harness.detectChanges();
+    expect(router.url).toBe('/local/multiplayer/modes');
+    expect(session.selectedMode()).toBe('precision');
     harness.routeNativeElement!.querySelector<HTMLAnchorElement>('a[aria-label="Voltar"]')!.click();
     await harness.fixture.whenStable();
     harness.detectChanges();
@@ -186,8 +202,8 @@ describe('Local multiplayer session flow', () => {
 
   it('allows the next-step route when an actual valid session exists', async () => {
     session.initialize();
-    await harness.navigateByUrl('/local/multiplayer/modes', LocalMultiplayerReadyPage);
+    await harness.navigateByUrl('/local/multiplayer/modes', LocalMultiplayerModesPage);
     expect(router.url).toBe('/local/multiplayer/modes');
-    expect(harness.routeNativeElement!.textContent).toContain('GRUPO PRONTO');
+    expect(harness.routeNativeElement!.textContent).toContain('ESCOLHA O MODO');
   });
 });

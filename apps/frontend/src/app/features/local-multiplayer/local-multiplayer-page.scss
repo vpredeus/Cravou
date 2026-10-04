@@ -1,3 +1,5 @@
+@use './local-multiplayer-controls' as controls;
+
 .player-count {
   display: flex;
   flex-wrap: wrap;
@@ -18,30 +20,7 @@
   }
 }
 button {
-  min-height: 2.75rem;
-  min-width: 2.75rem;
-  border: 1px solid var(--surface-highlight);
-  border-radius: 0.7rem;
-  background: var(--surface-background);
-  color: var(--text-color);
-  cursor: pointer;
-  transition:
-    transform 100ms ease,
-    border-color 100ms ease;
-  &:hover:not(:disabled) {
-    border-color: var(--accent-color);
-  }
-  &:active:not(:disabled) {
-    transform: translateY(2px);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--text-color);
-    outline-offset: 3px;
-  }
-  &:disabled {
-    opacity: 0.45;
-    cursor: default;
-  }
+  @include controls.control;
 }
 .players {
   display: grid;
@@ -56,18 +35,5 @@ button {
   }
 }
 .continue {
-  width: min(100%, 20rem);
-  padding: 0.9rem 1.25rem;
-  display: inline-flex;
-  justify-content: space-between;
-  gap: 1rem;
-  box-shadow:
-    0 0.25rem 0 var(--shadow-color),
-    0 0 1rem color-mix(in srgb, var(--accent-color) 7%, transparent);
-  font-weight: 600;
-}
-@media (prefers-reduced-motion: reduce) {
-  button {
-    transition: none;
-  }
+  @include controls.primary-action;
 }

@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
 import type { NextStepContent } from './features/home/next-step-page';
-import { localMultiplayerSessionGuard } from './features/local-multiplayer/local-multiplayer-session-guard';
+import {
+  localMultiplayerModeGuard,
+  localMultiplayerSessionGuard,
+} from './features/local-multiplayer/local-multiplayer-session-guard';
 
 export const routes: Routes = [
   {
@@ -25,6 +28,15 @@ export const routes: Routes = [
   {
     path: 'local/multiplayer/modes',
     canActivate: [localMultiplayerSessionGuard],
+    loadComponent: () =>
+      import('./features/local-multiplayer/local-multiplayer-modes-page').then(
+        (m) => m.LocalMultiplayerModesPage,
+      ),
+    title: 'Cravou! · Escolha o modo',
+  },
+  {
+    path: 'local/multiplayer/match',
+    canActivate: [localMultiplayerModeGuard],
     loadComponent: () =>
       import('./features/local-multiplayer/local-multiplayer-ready-page').then(
         (m) => m.LocalMultiplayerReadyPage,
