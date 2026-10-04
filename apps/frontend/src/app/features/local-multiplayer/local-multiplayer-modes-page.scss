@@ -1,0 +1,47 @@
+@use '../../shared/styles/entry-controls';
+@use './local-multiplayer-controls' as controls;
+
+h2 {
+  margin: 0 0 1.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+.entry-choice {
+  min-width: 0;
+  min-height: 12rem;
+  justify-content: flex-start;
+  text-align: left;
+  strong {
+    text-transform: uppercase;
+  }
+  .selection-indicator {
+    margin-top: auto;
+    min-height: 1.2em;
+    font-size: 0.75rem;
+  }
+  &[aria-pressed='true'] {
+    border: 3px double var(--accent-color);
+    padding: calc(clamp(1rem, 4cqw, 2rem) - 2px);
+    box-shadow:
+      0 0.3rem 0 var(--shadow-color),
+      0 0 1.5rem color-mix(in srgb, var(--accent-color) 12%, transparent);
+    .selection-indicator {
+      color: var(--accent-color);
+    }
+  }
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+    border-color: var(--surface-highlight);
+    transform: none;
+  }
+}
+.advance {
+  text-align: center;
+}
+.continue {
+  @include controls.control;
+  @include controls.primary-action;
+}

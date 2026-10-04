@@ -1,0 +1,37 @@
+<app-entry-shell
+  heading="MULTIPLAYER LOCAL"
+  [subtitle]="session.playerCount() + ' jogadores'"
+  backTo="/local/multiplayer"
+  [scrollable]="true"
+>
+  <section aria-labelledby="mode-heading">
+    <h2 id="mode-heading">ESCOLHA O MODO</h2>
+    <div class="entry-options" role="group" aria-labelledby="mode-heading">
+      @for (choice of choices(); track choice.mode.id) {
+        @let mode = choice.mode;
+        <button
+          class="entry-choice"
+          type="button"
+          [attr.aria-pressed]="session.selectedMode() === mode.id"
+          [attr.aria-labelledby]="'mode-name-' + mode.id"
+          [attr.aria-describedby]="'mode-description-' + mode.id"
+          [disabled]="!choice.available"
+          (click)="session.selectMode(mode.id)"
+        >
+          <strong [id]="'mode-name-' + mode.id">{{ mode.name }}</strong>
+          <span [id]="'mode-description-' + mode.id">{{ mode.description }}</span>
+          <span class="selection-indicator" aria-hidden="true">
+            @if (session.selectedMode() === mode.id) {
+              ✓ Selecionado
+            }
+          </span>
+        </button>
+      }
+    </div>
+  </section>
+  <div class="advance">
+    <button class="continue" type="button" [disabled]="!canContinue()" (click)="continue()">
+      CONTINUAR <span aria-hidden="true">→</span>
+    </button>
+  </div>
+</app-entry-shell>
