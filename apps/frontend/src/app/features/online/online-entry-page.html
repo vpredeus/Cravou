@@ -1,0 +1,48 @@
+<app-entry-shell heading="JOGAR ONLINE" backTo="/">
+  <div class="online-entry">
+    <section class="entry-panel" aria-labelledby="online-profile-title">
+      <h2 id="online-profile-title">PERFIL</h2>
+      <div class="profile-row">
+        <app-profile-avatar class="current-avatar" [avatarId]="preferences.profile().avatarId" />
+        <label for="online-nickname"
+          >Nickname
+          <input
+            class="entry-input"
+            id="online-nickname"
+            type="text"
+            autocomplete="off"
+            [value]="preferences.profile().nickname"
+            (input)="editNickname($event)"
+          />
+        </label>
+      </div>
+      <fieldset class="avatars">
+        <legend>Avatar</legend>
+        @for (avatar of avatars; track avatar.id) {
+          <label
+            class="avatar-option"
+            [class.selected]="preferences.profile().avatarId === avatar.id"
+          >
+            <input
+              type="radio"
+              name="online-avatar"
+              [value]="avatar.id"
+              [checked]="preferences.profile().avatarId === avatar.id"
+              (change)="preferences.setAvatar(avatar.id)"
+            />
+            <app-profile-avatar [avatarId]="avatar.id" />
+            <span>{{ avatar.name }}</span>
+          </label>
+        }
+      </fieldset>
+    </section>
+    <nav class="entry-options" aria-label="Opções online">
+      <a class="entry-choice" routerLink="/online/create"
+        ><strong>CRIAR GRUPO</strong><span>Preparar um grupo</span></a
+      >
+      <a class="entry-choice" routerLink="/online/join"
+        ><strong>ENTRAR EM GRUPO</strong><span>Usar um código</span></a
+      >
+    </nav>
+  </div>
+</app-entry-shell>

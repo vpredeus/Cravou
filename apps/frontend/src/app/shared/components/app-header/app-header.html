@@ -1,0 +1,21 @@
+<header [class.centered-navigation]="centeredNavigation()">
+  <div class="identity">
+    @if (showBrand()) {
+      <a class="brand" routerLink="/" aria-label="Cravou! · Início">cravou<span>!</span></a>
+    }
+    @if (backTo(); as destination) {
+      <a class="back" [routerLink]="destination" aria-label="Voltar">
+        @if (centeredNavigation()) {
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="m11 5-7 7 7 7M4 12h16" />
+          </svg>
+        } @else {
+          Voltar
+        }
+      </a>
+    }
+  </div>
+  @if (showSettings()) {
+    <app-settings-panel (openedChange)="settingsOpenedChange.emit($event)" />
+  }
+</header>

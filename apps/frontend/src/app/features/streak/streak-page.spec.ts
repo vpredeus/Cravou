@@ -45,6 +45,7 @@ describe('StreakPage', () => {
   let now: number;
 
   beforeEach(async () => {
+    TestBed.configureTestingModule({ providers: [provideRouter([])] });
     vi.stubGlobal('Audio', undefined);
     vi.spyOn(Math, 'random').mockReturnValue((1233 - 10 + 0.5) / 1991);
     fixture = TestBed.createComponent(StreakPage);
@@ -217,10 +218,10 @@ describe('Streak route', () => {
   beforeEach(() => vi.stubGlobal('Audio', undefined));
   afterEach(() => vi.unstubAllGlobals());
 
-  it('loads the actual Streak experience from the root route', async () => {
+  it('loads the actual Streak experience from its own route', async () => {
     TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
     const harness = await RouterTestingHarness.create();
-    await harness.navigateByUrl('/', StreakPage);
+    await harness.navigateByUrl('/streak', StreakPage);
     expect(harness.routeNativeElement?.querySelector('app-game-device')).not.toBeNull();
     expect(harness.routeNativeElement?.querySelector('.mode')?.textContent).toContain('STREAK');
   });

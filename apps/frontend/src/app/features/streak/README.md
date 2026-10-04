@@ -39,5 +39,9 @@ largura é restrita e há altura, ficam compactos acima do aparelho. A largura
 do aparelho também acompanha a altura útil para preservar sua composição
 sem scroll. Settings permanece um popover sobreposto e não move o aparelho.
 
-Rota principal: `/`. Demo técnica isolada: `/device-demo`. Sem Home, modos
-adicionais, persistência, chamadas de backend ou multiplayer nesta feature.
+Rota: `/streak`, acessível por Home → Local → Single Player. O cabeçalho
+compartilhado centraliza a marca, oferece a seta para voltar a Local e mantém
+Settings à direita. STREAK / SINGLE PLAYER aparece acima da meta na coluna do
+aparelho, em uma linha quando há pouca altura disponível.
+Demo técnica isolada: `/device-demo`. Regras, timer e aparelho permanecem
+independentes do fluxo de entrada; não há persistência ou backend.

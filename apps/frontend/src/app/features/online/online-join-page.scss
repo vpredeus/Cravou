@@ -1,0 +1,42 @@
+@use '../../shared/styles/entry-controls';
+form {
+  display: grid;
+  gap: 0.8rem;
+  width: min(100%, 26rem);
+  align-self: center;
+}
+label {
+  font-size: 0.85rem;
+}
+.entry-input {
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+}
+p {
+  margin: 0;
+  color: var(--muted-text-color);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+.entry-submit {
+  min-height: 2.75rem;
+  padding: 0.7rem 1.5rem;
+  border: 1px solid var(--surface-highlight);
+  border-radius: 0.6rem;
+  background: var(--surface-background);
+  color: var(--text-color);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  &:hover {
+    border-color: var(--accent-color);
+  }
+  &:active {
+    transform: translateY(0.1rem);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--text-color);
+    outline-offset: 3px;
+  }
+}

@@ -10,7 +10,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { GameDevice } from '../../shared/components/game-device/game-device';
-import { SettingsPanel } from '../../shared/components/settings-panel/settings-panel';
+import { AppHeader } from '../../shared/components/app-header/app-header';
 import { PreferencesStore } from '../../shared/preferences/preferences-store';
 import { formatCentiseconds } from '../../shared/timer/time';
 import { TimerEngine } from '../../shared/timer/timer-engine';
@@ -19,7 +19,7 @@ import { formatDifference, formatSecondsLabel } from './streak-rules';
 
 @Component({
   selector: 'app-streak-page',
-  imports: [GameDevice, SettingsPanel],
+  imports: [GameDevice, AppHeader],
   providers: [TimerEngine, StreakGame],
   templateUrl: './streak-page.html',
   styleUrl: './streak-page.scss',
