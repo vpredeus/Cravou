@@ -1,4 +1,8 @@
-<app-seven-segment-display [value]="value()" [hidden]="displayHidden()" />
+<app-seven-segment-display
+  [value]="value()"
+  [hidden]="displayHidden()"
+  [message]="displayMessage()"
+/>
 <ng-content />
 <app-action-button
   [label]="buttonLabel()"

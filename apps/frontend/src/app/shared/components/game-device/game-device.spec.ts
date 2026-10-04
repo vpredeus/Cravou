@@ -9,6 +9,7 @@ describe('GameDevice', () => {
     const fixture = TestBed.createComponent(GameDevice);
     fixture.componentRef.setInput('value', '07.41');
     fixture.componentRef.setInput('displayHidden', true);
+    fixture.componentRef.setInput('displayMessage', 'Mensagem externa');
     fixture.componentRef.setInput('buttonLabel', 'Testar dispositivo');
     fixture.componentRef.setInput('soundEnabled', false);
     fixture.componentRef.setInput('soundCue', 'end');
@@ -21,6 +22,7 @@ describe('GameDevice', () => {
       .componentInstance as ActionButton;
     expect(display.value()).toBe('07.41');
     expect(display.hidden()).toBe(true);
+    expect(display.message()).toBe('Mensagem externa');
     expect(button.label()).toBe('Testar dispositivo');
     expect(button.soundEnabled()).toBe(false);
     expect(button.soundCue()).toBe('end');

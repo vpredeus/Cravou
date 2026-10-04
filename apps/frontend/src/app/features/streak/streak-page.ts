@@ -9,55 +9,51 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { ButtonSoundCue } from '../../shared/components/action-button/button-sound';
 import { GameDevice } from '../../shared/components/game-device/game-device';
 import { SettingsPanel } from '../../shared/components/settings-panel/settings-panel';
 import { PreferencesStore } from '../../shared/preferences/preferences-store';
 import { formatCentiseconds } from '../../shared/timer/time';
 import { TimerEngine } from '../../shared/timer/timer-engine';
+import { StreakGame } from './streak-game';
+import { formatDifference, formatSecondsLabel } from './streak-rules';
 
 @Component({
-  selector: 'app-game-device-demo',
+  selector: 'app-streak-page',
   imports: [GameDevice, SettingsPanel],
-  providers: [TimerEngine],
-  templateUrl: './game-device-demo.html',
-  styleUrl: './game-device-demo.scss',
+  providers: [TimerEngine, StreakGame],
+  templateUrl: './streak-page.html',
+  styleUrl: './streak-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GameDeviceDemo {
-  protected readonly timer = inject(TimerEngine);
+export class StreakPage {
+  protected readonly game = inject(StreakGame);
   protected readonly preferences = inject(PreferencesStore);
   protected readonly settingsOpen = signal(false);
-  protected readonly targetCentiseconds = 1233;
-  protected readonly targetLabel = formatCentiseconds(this.targetCentiseconds).replace('.', ',');
-  protected readonly value = computed(() => formatCentiseconds(this.timer.elapsedCentiseconds()));
-  protected readonly hidden = computed(() => this.timer.state() === 'RUNNING');
-  protected readonly soundCue = computed<ButtonSoundCue>(() =>
-    this.timer.state() === 'RUNNING' ? 'end' : 'start',
+  protected readonly targetLabel = computed(() =>
+    formatSecondsLabel(this.game.targetCentiseconds()),
+  );
+  protected readonly value = computed(() =>
+    formatCentiseconds(this.game.timer.elapsedCentiseconds()),
   );
   protected readonly buttonLabel = computed(() => {
-    switch (this.timer.state()) {
+    switch (this.game.timer.state()) {
       case 'READY':
         return 'Iniciar cronômetro';
       case 'RUNNING':
         return 'Parar cronômetro';
       case 'FINISHED':
-        return 'Cronômetro finalizado';
+        return 'Tentativa finalizada';
       case 'TIMED_OUT':
         return 'Tempo esgotado';
     }
   });
-  protected readonly prompt = computed(() => {
-    switch (this.timer.state()) {
-      case 'READY':
-        return 'SUA VEZ';
-      case 'RUNNING':
-        return 'EM ANDAMENTO';
-      case 'FINISHED':
-        return 'FINALIZADO';
-      case 'TIMED_OUT':
-        return 'TEMPO ESGOTADO';
-    }
+  protected readonly differenceLabel = computed(() => {
+    const result = this.game.result();
+    return result?.status === 'ERROU' ? formatDifference(result.differenceCentiseconds) : '';
+  });
+  protected readonly resultLabel = computed(() => {
+    const result = this.game.result();
+    return result && result.status !== 'DNF' ? formatSecondsLabel(result.elapsedCentiseconds) : '';
   });
   private readonly injector = inject(Injector);
   private readonly device = viewChild.required<GameDevice, ElementRef<HTMLElement>>('device', {
@@ -66,12 +62,12 @@ export class GameDeviceDemo {
 
   protected onAction(): void {
     if (this.settingsOpen()) return;
-    if (this.timer.state() === 'READY') this.timer.start();
-    else if (this.timer.state() === 'RUNNING') this.timer.stop();
+    if (this.game.timer.state() === 'READY') this.game.start();
+    else if (this.game.timer.state() === 'RUNNING') this.game.stop();
   }
 
-  protected resetDemo(): void {
-    this.timer.reset();
+  protected nextAttempt(): void {
+    if (!this.game.nextAttempt()) return;
     afterNextRender(() => this.device().nativeElement.querySelector('button')?.focus(), {
       injector: this.injector,
     });

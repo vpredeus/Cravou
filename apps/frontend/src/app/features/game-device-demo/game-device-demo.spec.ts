@@ -44,10 +44,10 @@ describe('GameDeviceDemo', () => {
     vi.restoreAllMocks();
   });
 
-  it('loads the device from the root route', async () => {
+  it('keeps the technical device demo on its isolated route', async () => {
     TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
     const harness = await RouterTestingHarness.create();
-    await harness.navigateByUrl('/', GameDeviceDemo);
+    await harness.navigateByUrl('/device-demo', GameDeviceDemo);
     expect(harness.routeNativeElement?.querySelector('app-game-device')).not.toBeNull();
   });
 
