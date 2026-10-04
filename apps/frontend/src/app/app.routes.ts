@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import type { NextStepContent } from './features/home/next-step-page';
+import { localMultiplayerSessionGuard } from './features/local-multiplayer/local-multiplayer-session-guard';
 
 export const routes: Routes = [
   {
@@ -15,14 +16,20 @@ export const routes: Routes = [
   },
   {
     path: 'local/multiplayer',
-    loadComponent: () => import('./features/home/next-step-page').then((m) => m.NextStepPage),
+    loadComponent: () =>
+      import('./features/local-multiplayer/local-multiplayer-page').then(
+        (m) => m.LocalMultiplayerPage,
+      ),
     title: 'Cravou! · Multiplayer local',
-    data: {
-      heading: 'MULTIPLAYER LOCAL',
-      subtitle: 'Configuração de grupo',
-      notice: 'A preparação do grupo será implementada na próxima etapa.',
-      backTo: '/local',
-    } satisfies NextStepContent,
+  },
+  {
+    path: 'local/multiplayer/modes',
+    canActivate: [localMultiplayerSessionGuard],
+    loadComponent: () =>
+      import('./features/local-multiplayer/local-multiplayer-ready-page').then(
+        (m) => m.LocalMultiplayerReadyPage,
+      ),
+    title: 'Cravou! · Grupo pronto',
   },
   {
     path: 'streak',

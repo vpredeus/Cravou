@@ -54,11 +54,12 @@ describe('Home entry flow', () => {
     expect(harness.routeNativeElement?.querySelector('h1')?.textContent).toBe('Bem-vindo');
   });
 
-  it('opens an honest local group placeholder and returns to Local', async () => {
+  it('opens local group setup and returns to Local', async () => {
     await harness.navigateByUrl('/local', LocalEntryPage);
     await follow('/local/multiplayer');
     expect(harness.routeNativeElement?.querySelector('h1')?.textContent).toBe('MULTIPLAYER LOCAL');
-    expect(harness.routeNativeElement?.textContent).toContain('próxima etapa');
+    expect(harness.routeNativeElement?.textContent).toContain('MONTE O GRUPO');
+    expect(harness.routeNativeElement?.querySelectorAll('app-player-editor')).toHaveLength(4);
     expect(
       harness.routeNativeElement?.querySelector('app-game-device, input[type="number"]'),
     ).toBeNull();

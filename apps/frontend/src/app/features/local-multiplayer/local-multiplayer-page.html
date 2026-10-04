@@ -1,0 +1,49 @@
+<app-entry-shell
+  heading="MULTIPLAYER LOCAL"
+  subtitle="MONTE O GRUPO"
+  backTo="/local"
+  [scrollable]="true"
+>
+  <div class="player-count" role="group" aria-label="Quantidade de jogadores">
+    <span>Jogadores</span>
+    <div class="counter">
+      <button
+        type="button"
+        aria-label="Diminuir quantidade de jogadores"
+        [disabled]="!session.canDecrease()"
+        (click)="session.decrease()"
+      >
+        −
+      </button>
+      <output aria-live="polite" aria-label="Quantidade de jogadores">{{
+        session.playerCount()
+      }}</output>
+      <button
+        type="button"
+        aria-label="Aumentar quantidade de jogadores"
+        [disabled]="!session.canIncrease()"
+        (click)="session.increase()"
+      >
+        +
+      </button>
+    </div>
+  </div>
+  <div class="players">
+    @for (player of session.players(); track player.id; let index = $index) {
+      <app-player-editor
+        [player]="player"
+        [position]="index + 1"
+        (nameChange)="session.updatePlayerName(player.id, $event)"
+        (avatarChange)="session.updatePlayerAvatar(player.id, $event)"
+      />
+    }
+  </div>
+  <div class="advance">
+    <button class="continue" type="button" [disabled]="!session.isValid()" (click)="continue()">
+      CONTINUAR <span aria-hidden="true">→</span>
+    </button>
+    @if (!session.isValid()) {
+      <p>Preencha o nome de todos os jogadores para continuar.</p>
+    }
+  </div>
+</app-entry-shell>

@@ -1,0 +1,19 @@
+<app-entry-shell
+  heading="MULTIPLAYER LOCAL"
+  subtitle="GRUPO PRONTO"
+  backTo="/local/multiplayer"
+  [scrollable]="true"
+>
+  <section class="group-summary" aria-labelledby="group-size">
+    <h2 id="group-size">{{ session.playerCount() }} jogadores</h2>
+    <ol>
+      @for (player of session.players(); track player.id) {
+        <li>
+          <app-profile-avatar [avatarId]="player.avatarId" />
+          <span>{{ player.name }}</span>
+        </li>
+      }
+    </ol>
+    <p>Grupo formado. A escolha do modo será a próxima etapa.</p>
+  </section>
+</app-entry-shell>

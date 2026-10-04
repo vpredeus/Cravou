@@ -1,0 +1,43 @@
+<section class="player-card" [attr.aria-labelledby]="'player-heading-' + player().id">
+  <h2 [id]="'player-heading-' + player().id">Jogador {{ position() }}</h2>
+  <div class="identity">
+    <app-profile-avatar class="current-avatar" [avatarId]="player().avatarId" />
+    <div class="name-field">
+      <label [for]="'player-name-' + player().id">Nome do jogador {{ position() }}</label>
+      <input
+        #nameInput
+        [id]="'player-name-' + player().id"
+        [value]="player().name"
+        [maxLength]="nameLimit"
+        [attr.aria-invalid]="invalidName() ? 'true' : null"
+        [attr.aria-describedby]="invalidName() ? 'name-error-' + player().id : null"
+        (input)="nameChange.emit(nameInput.value)"
+        autocomplete="off"
+        required
+      />
+    </div>
+  </div>
+  @if (invalidName()) {
+    <p class="name-error" [id]="'name-error-' + player().id" aria-live="polite">
+      Preencha o nome para continuar.
+    </p>
+  }
+  <fieldset [attr.aria-label]="'Avatar do jogador ' + position()">
+    <legend>Avatar</legend>
+    <div class="avatar-options">
+      @for (avatar of avatars; track avatar.id) {
+        <label class="avatar-choice" [class.selected]="player().avatarId === avatar.id">
+          <input
+            type="radio"
+            [name]="'player-avatar-' + player().id"
+            [value]="avatar.id"
+            [checked]="player().avatarId === avatar.id"
+            (change)="avatarChange.emit(avatar.id)"
+          />
+          <app-profile-avatar [avatarId]="avatar.id" />
+          <span>{{ avatar.name }}</span>
+        </label>
+      }
+    </div>
+  </fieldset>
+</section>
