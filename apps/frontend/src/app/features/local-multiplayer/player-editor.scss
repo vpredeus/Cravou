@@ -1,0 +1,112 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+.player-card {
+  padding: 1rem;
+  border: 1px solid var(--surface-highlight);
+  border-radius: 1.1rem;
+  background: var(--surface-background);
+  box-shadow: 0 0.5rem 1.5rem color-mix(in srgb, var(--shadow-color) 15%, transparent);
+}
+h2 {
+  margin: 0 0 1rem;
+  color: var(--muted-text-color);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.identity {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+.current-avatar {
+  flex: 0 0 2.75rem;
+  padding: 0.4rem;
+  color: var(--accent-color);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent-color) 10%, var(--surface-background));
+}
+.name-field {
+  flex: 1;
+  min-width: 0;
+  label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.75rem;
+  }
+  input {
+    width: 100%;
+    min-width: 0;
+    min-height: 2.75rem;
+    padding: 0.6rem 0.75rem;
+    font: inherit;
+    color: var(--text-color);
+    background: var(--surface-background);
+    border: 1px solid var(--surface-highlight);
+    border-radius: 0.6rem;
+  }
+  input[aria-invalid='true'] {
+    border-style: dashed;
+    border-color: var(--text-color);
+  }
+}
+.name-error {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+}
+fieldset {
+  margin: 1rem 0 0;
+  padding: 0;
+  min-width: 0;
+  border: 0;
+}
+legend {
+  margin-bottom: 0.4rem;
+  padding: 0;
+  font-size: 0.75rem;
+}
+.avatar-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+.avatar-choice {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  min-height: 3.5rem;
+  padding: 0.25rem;
+  border: 1px solid var(--surface-highlight);
+  border-radius: 0.6rem;
+  cursor: pointer;
+  font-size: 0.6rem;
+  color: var(--muted-text-color);
+  input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  app-profile-avatar {
+    width: 1.5rem;
+  }
+  &:hover {
+    background: color-mix(in srgb, var(--accent-color) 6%, var(--surface-background));
+  }
+  &.selected {
+    padding: calc(0.25rem - 2px);
+    border: 3px double var(--accent-color);
+    color: var(--accent-color);
+  }
+}
+.name-field input:focus-visible,
+.avatar-choice:focus-within {
+  outline: 2px solid var(--text-color);
+  outline-offset: 3px;
+}

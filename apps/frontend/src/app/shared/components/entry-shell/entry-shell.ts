@@ -20,6 +20,7 @@ export class EntryShell {
   readonly subtitle = input('');
   readonly backTo = input<string>();
   readonly welcome = input(false);
+  readonly scrollable = input(false);
   private readonly title = viewChild.required<ElementRef<HTMLHeadingElement>>('title');
 
   constructor() {
