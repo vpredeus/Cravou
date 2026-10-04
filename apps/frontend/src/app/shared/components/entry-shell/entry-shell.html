@@ -1,0 +1,17 @@
+<main class="entry-page">
+  <app-header [showBrand]="!welcome()" [backTo]="backTo()" [centeredNavigation]="!welcome()" />
+  <div class="entry-area">
+    <div class="entry-content">
+      <div class="intro">
+        @if (welcome()) {
+          <p class="hero-brand" aria-label="Cravou!">cravou<span>!</span></p>
+        }
+        <h1 #title tabindex="-1">{{ heading() }}</h1>
+        @if (subtitle()) {
+          <p class="subtitle">{{ subtitle() }}</p>
+        }
+      </div>
+      <ng-content />
+    </div>
+  </div>
+</main>

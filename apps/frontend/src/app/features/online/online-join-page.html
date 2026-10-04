@@ -1,0 +1,18 @@
+<app-entry-shell heading="ENTRAR EM GRUPO" backTo="/online">
+  <form class="entry-panel" (submit)="submit($event)">
+    <label for="group-code">Código do grupo</label>
+    <input
+      class="entry-input"
+      id="group-code"
+      type="text"
+      autocomplete="off"
+      autocapitalize="characters"
+      spellcheck="false"
+      required
+      [value]="code()"
+      (input)="editCode($event)"
+    />
+    <p>A conexão com o grupo será adicionada na próxima etapa.</p>
+    <button class="entry-submit" type="submit">ENTRAR</button>
+  </form>
+</app-entry-shell>

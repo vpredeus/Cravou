@@ -83,5 +83,6 @@ O painel usa Popover nativo para fechamento externo/Escape e posicionamento
 flutuante limitado ao viewport. O registro de avatares contém SVGs locais
 temporários. `App` aplica as cores escolhidas como CSS Custom Properties;
 os valores iniciais continuam vindo do tema existente. O GameDevice não
-conhece perfil, painel, meta, timer nem regras de jogo. A rota principal agora
-usa a feature `streak`; veja seu README para regras, timeout e estado da sessão.
+conhece perfil, painel, meta, timer nem regras de jogo. A Home está em `/`;
+`/streak` reutiliza o aparelho. Veja o README do Streak para regras, timeout
+e estado da sessão.

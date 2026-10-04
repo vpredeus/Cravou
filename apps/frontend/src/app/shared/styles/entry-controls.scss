@@ -1,0 +1,83 @@
+.entry-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: clamp(0.75rem, 2cqw, 1rem);
+  width: 100%;
+}
+.entry-choice {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: clamp(5.5rem, 20cqh, 10rem);
+  padding: clamp(1rem, 4cqw, 2rem);
+  border: 1px solid var(--surface-highlight);
+  border-radius: 1.1rem;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--text-color) 5%, var(--surface-background)),
+    var(--surface-background)
+  );
+  color: var(--text-color);
+  text-decoration: none;
+  box-shadow:
+    0 0.3rem 0 color-mix(in srgb, var(--surface-background) 80%, var(--shadow-color)),
+    0 0.8rem 1.5rem color-mix(in srgb, var(--shadow-color) 15%, transparent);
+  transition:
+    transform 100ms ease,
+    box-shadow 100ms ease,
+    border-color 100ms ease;
+  strong {
+    font-size: clamp(0.9rem, 3cqw, 1.1rem);
+    font-weight: 650;
+    letter-spacing: 0.08em;
+  }
+  span {
+    color: var(--muted-text-color);
+    font-size: 0.8rem;
+  }
+  &::before {
+    content: '';
+    width: 1.5rem;
+    height: 0.2rem;
+    border-radius: 1rem;
+    background: var(--accent-color);
+    box-shadow: 0 0 0.7rem color-mix(in srgb, var(--accent-color) 40%, transparent);
+  }
+  &:hover {
+    border-color: color-mix(in srgb, var(--accent-color) 45%, var(--surface-highlight));
+  }
+  &:active {
+    transform: translateY(0.2rem);
+    box-shadow: 0 0.1rem 0 var(--surface-background);
+  }
+}
+.entry-choice:focus-visible,
+.entry-input:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 3px;
+}
+.entry-panel {
+  padding: clamp(1rem, 3cqh, 1.5rem);
+  border: 1px solid var(--surface-highlight);
+  border-radius: 1.1rem;
+  background: color-mix(in srgb, var(--surface-background) 94%, transparent);
+  box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--shadow-color) 20%, transparent);
+  backdrop-filter: blur(20px);
+}
+.entry-input {
+  width: 100%;
+  min-width: 0;
+  min-height: 2.75rem;
+  border: 1px solid var(--surface-highlight);
+  border-radius: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--surface-background);
+  color: var(--text-color);
+  font: inherit;
+}
+@media (prefers-reduced-motion: reduce) {
+  .entry-choice {
+    transition: none;
+  }
+}
