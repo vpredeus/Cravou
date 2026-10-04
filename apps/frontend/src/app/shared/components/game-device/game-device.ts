@@ -13,6 +13,7 @@ import { SevenSegmentDisplay } from '../seven-segment-display/seven-segment-disp
 export class GameDevice {
   readonly value = input('00.00');
   readonly displayHidden = input(false);
+  readonly displayMessage = input('');
   readonly buttonLabel = input('Acionar dispositivo');
   readonly disabled = input(false);
   readonly soundEnabled = input(true);

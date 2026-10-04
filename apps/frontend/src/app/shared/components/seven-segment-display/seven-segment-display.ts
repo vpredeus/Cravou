@@ -16,6 +16,7 @@ import { Digit, SevenSegmentDigit } from '../seven-segment-digit/seven-segment-d
 export class SevenSegmentDisplay {
   readonly value = input('00.00');
   readonly hidden = input(false);
+  readonly message = input('');
 
   protected readonly characters = computed<readonly (Digit | '.')[]>(() => {
     const value = this.value().trim().replace(',', '.');
@@ -23,6 +24,8 @@ export class SevenSegmentDisplay {
     return Array.from(normalized) as (Digit | '.')[];
   });
   protected readonly accessibleValue = computed(() =>
-    this.hidden() ? 'Visor oculto' : `Visor: ${this.characters().join('').replace('.', ',')}`,
+    this.hidden()
+      ? 'Visor oculto'
+      : `Visor: ${this.message() || this.characters().join('').replace('.', ',')}`,
   );
 }

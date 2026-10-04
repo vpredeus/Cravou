@@ -1,0 +1,78 @@
+<main class="streak-page">
+  <header>
+    <h1>cravou<span>!</span></h1>
+    <p class="mode">STREAK <span>SINGLE PLAYER</span></p>
+    <app-settings-panel (openedChange)="settingsOpen.set($event)" />
+  </header>
+
+  <div class="arena">
+    <div class="board">
+      <section class="current" aria-labelledby="current-title">
+        <h2 id="current-title">STREAK ATUAL</h2>
+        <p class="streak-count" aria-live="polite">{{ game.currentStreak() }}</p>
+      </section>
+
+      <section class="device-slot" aria-label="Tentativa de Streak">
+        <div class="device-column">
+          <p class="target">
+            META <strong>{{ targetLabel() }} <span>s</span></strong>
+          </p>
+          <app-game-device
+            #device
+            [value]="value()"
+            [displayHidden]="game.timer.state() === 'RUNNING'"
+            [displayMessage]="game.timer.state() === 'TIMED_OUT' ? 'DNF' : ''"
+            [soundEnabled]="preferences.soundEnabled()"
+            [soundCue]="game.timer.state() === 'RUNNING' ? 'end' : 'start'"
+            [keyboardShortcut]="!settingsOpen()"
+            [disabled]="game.completed() || settingsOpen()"
+            [buttonLabel]="buttonLabel()"
+            (action)="onAction()"
+          >
+            <div class="attempt-status" role="status" aria-live="polite" aria-atomic="true">
+              @if (game.result(); as result) {
+                <strong [class.hit]="result.status === 'CRAVOU'">{{
+                  result.status === 'CRAVOU' ? 'CRAVOU!' : result.status
+                }}</strong>
+                @if (result.status === 'DNF') {
+                  <p>TEMPO ESGOTADO</p>
+                } @else {
+                  <p>
+                    <span>RESULTADO {{ resultLabel() }} s</span>
+                    @if (result.status === 'ERROU') {
+                      <span class="difference">{{ differenceLabel() }}</span>
+                    }
+                  </p>
+                }
+              } @else {
+                <strong>{{ game.timer.state() === 'RUNNING' ? 'EM ANDAMENTO' : 'SUA VEZ' }}</strong>
+              }
+            </div>
+          </app-game-device>
+          <div class="attempt-action">
+            @if (game.completed()) {
+              <button class="next-attempt" type="button" (click)="nextAttempt()">
+                Nova tentativa
+              </button>
+            } @else {
+              <p class="hint">Toque no botão ou pressione <kbd>ESPAÇO</kbd></p>
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="best" aria-labelledby="best-title">
+        <h2 id="best-title">MELHORES <span>TOP 5 · SESSÃO</span></h2>
+        @if (game.bestStreaks().length) {
+          <ol>
+            @for (streak of game.bestStreaks(); track $index) {
+              <li>{{ streak }}</li>
+            }
+          </ol>
+        } @else {
+          <p class="empty-best">Nenhuma sequência ainda</p>
+        }
+      </section>
+    </div>
+  </div>
+</main>

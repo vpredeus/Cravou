@@ -2,6 +2,26 @@ import { TestBed } from '@angular/core/testing';
 import { SevenSegmentDisplay } from './seven-segment-display';
 
 describe('SevenSegmentDisplay', () => {
+  it('can present an external message without showing a numeric result', async () => {
+    const fixture = TestBed.createComponent(SevenSegmentDisplay);
+    fixture.componentRef.setInput('value', '30.00');
+    fixture.componentRef.setInput('message', 'DNF');
+    await fixture.whenStable();
+    const element = fixture.nativeElement as HTMLElement;
+    expect(element.getAttribute('aria-label')).toBe('Visor: DNF');
+    expect(element.querySelector('.display-message')?.textContent).toBe('DNF');
+    expect(element.querySelector<HTMLElement>('.digits')?.style.visibility).toBe('hidden');
+    fixture.componentRef.setInput('hidden', true);
+    await fixture.whenStable();
+    expect(element.querySelector('.display-message')).toBeNull();
+    expect(element.querySelector('.concealed-glow')).not.toBeNull();
+    expect(element.getAttribute('aria-label')).toBe('Visor oculto');
+    fixture.componentRef.setInput('hidden', false);
+    fixture.componentRef.setInput('message', '');
+    await fixture.whenStable();
+    expect(element.getAttribute('aria-label')).toBe('Visor: 30,00');
+    expect(element.querySelector('.display-message')).toBeNull();
+  });
   it.each([
     ['12.33', ['BC', 'ABDEG', 'ABCDG', 'ABCDG']],
     ['07.41', ['ABCDEF', 'ABC', 'BCFG', 'BC']],

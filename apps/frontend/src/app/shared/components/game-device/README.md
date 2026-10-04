@@ -24,6 +24,9 @@ Componentes standalone, sem cronômetro ou regras de jogo. `GameDevice` combina
   constante na cor do tema, difundido por blur sob o vidro fumê. O blur é aplicado
   somente ao brilho genérico, nunca ao valor real. O nome acessível também oculta
   o número. O valor permanece no DOM; isto é ocultação visual, não proteção de dados.
+- `displayMessage`: mensagem externa opcional no lugar dos números, sem lógica
+  de jogo. O estado oculto tem prioridade e continua mostrando só o brilho
+  genérico. Streak fornece `DNF` quando não há resultado numérico válido.
 - `disabled`, `buttonLabel`, `soundEnabled`: controlam o botão sem regras de jogo.
   A superfície iluminada não contém texto ou ícones; `buttonLabel` define apenas
   seu nome acessível via `aria-label`.
@@ -62,7 +65,7 @@ Na destruição, os áudios são parados e descarregados.
 Falhas de carregamento ou política de autoplay não interrompem a ação.
 
 A tela temporária está em `features/game-device-demo` e ocupa somente a rota
-raiz de `app.routes.ts`, sem barra de debug. Ela fornece uma meta fixa de 1233
+`/device-demo` de `app.routes.ts`, sem barra de debug. Ela fornece uma meta fixa de 1233
 centésimos, integra `TimerEngine` e abre `SettingsPanel` pela engrenagem.
 O timer usa `performance.now()` no início e no fim; o resultado usa
 `Math.floor(elapsedMilliseconds / 10)`. Não há atualização por frame enquanto
@@ -80,4 +83,5 @@ O painel usa Popover nativo para fechamento externo/Escape e posicionamento
 flutuante limitado ao viewport. O registro de avatares contém SVGs locais
 temporários. `App` aplica as cores escolhidas como CSS Custom Properties;
 os valores iniciais continuam vindo do tema existente. O GameDevice não
-conhece perfil, painel, meta, timer nem regras futuras de jogo.
+conhece perfil, painel, meta, timer nem regras de jogo. A rota principal agora
+usa a feature `streak`; veja seu README para regras, timeout e estado da sessão.

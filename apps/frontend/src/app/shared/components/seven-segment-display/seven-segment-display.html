@@ -3,8 +3,8 @@
     <div
       class="digits"
       aria-hidden="true"
-      [style.visibility]="hidden() ? 'hidden' : null"
-      [style.opacity]="hidden() ? 0 : null"
+      [style.visibility]="hidden() || message() ? 'hidden' : null"
+      [style.opacity]="hidden() || message() ? 0 : null"
     >
       @for (character of characters(); track $index) {
         @if (character === '.') {
@@ -18,6 +18,8 @@
     </div>
     @if (hidden()) {
       <div class="concealed-glow" aria-hidden="true"></div>
+    } @else if (message()) {
+      <div class="display-message" aria-hidden="true">{{ message() }}</div>
     }
     <div class="glass" aria-hidden="true"></div>
   </div>
